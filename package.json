@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "react": "16.11.0",
-    "react-native": "0.62.2"
+    "react-native": "0.62.2",
+    "react-native-android-wifi": "^0.0.41",
+    "react-native-wifi-hotspot": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
