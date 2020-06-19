@@ -9,6 +9,13 @@ const WifiScreen = () => {
 
 
     useEffect(() => {
+        persmission();
+        getWifiList();
+        getConnectedDevices();
+
+    }, []);
+
+    const persmission = () => {
         try {
             // permission to access location to set wifi connection
             const granted = PermissionsAndroid.request(
@@ -27,9 +34,10 @@ const WifiScreen = () => {
         } catch (err) {
             console.warn(err)
         }
-
+    }
+    const getWifiList = () => {
         // getting list of available wifi connection
-        wifi.loadWifiList((wifiStringList) => {
+        wifi.loadWifiList((wifiStringList) => { 
             var wifiArray = JSON.parse(wifiStringList);
             setAvailableConnection(wifiArray)
         },
@@ -37,7 +45,9 @@ const WifiScreen = () => {
                 console.log(error);
             }
         );
+    }
 
+    const getConnectedDevices = () => {
         // getting list of connected devices to phone hotspot
         RNFetchBlob.fs.readStream("/proc/net/arp", 'utf8')
             .then((stream) => {
@@ -47,14 +57,12 @@ const WifiScreen = () => {
                     data += chunk
                 })
                 stream.onEnd(() => {
-                    setConnectedDeviceInfo(data);
-                    console.log(data)
+                    setConnectedDeviceInfo(data); 
                 })
             }).catch(err => {
 
             });
-    }, []);
-
+    }
     return (
         <ScrollView>
             <View style={styles.container}>
