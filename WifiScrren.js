@@ -6,6 +6,7 @@ import RNFetchBlob from 'react-native-fetch-blob';
 const WifiScreen = () => {
 
     const [result, setResult] = useState('');
+    const [connectedDeviceInfo, setConnectedDeviceInfo] = useState('');
 
 
     useEffect(() => {
@@ -54,6 +55,7 @@ const WifiScreen = () => {
                 data += chunk
             })
             stream.onEnd(() => {
+                setConnectedDeviceInfo(data);
                 console.log(data)
             })
         })
@@ -61,7 +63,8 @@ const WifiScreen = () => {
 
     return (
         <View>
-            <Text style={styles.text}>{"Output:" + result}</Text>
+            <Text style={{fontSize:20}}>List of connected device:</Text>
+            <Text style={{ fontSize: 12 }}>{connectedDeviceInfo}</Text>
         </View>
     )
 }
