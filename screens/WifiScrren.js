@@ -10,15 +10,14 @@ const WifiScreen = () => {
 
     useEffect(() => {
         persmission();
-        getWifiList();
         getConnectedDevices();
 
     }, []);
 
-    const persmission = () => {
+    const persmission = async () => {
         try {
             // permission to access location to set wifi connection
-            const granted = PermissionsAndroid.request(
+            const granted = await PermissionsAndroid.request(
                 PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
                 {
                     'title': 'Wifi networks',
@@ -27,6 +26,7 @@ const WifiScreen = () => {
             ).then(res => {
                 if (res === "granted") {
                     console.log("Thank you for your permission! :)");
+                    getWifiList();
                 } else {
                     console.log("You will not able to retrieve wifi available networks list");
                 }
@@ -35,10 +35,10 @@ const WifiScreen = () => {
             console.warn(err)
         }
     }
-    const getWifiList = () => {
+    const getWifiList = async () => {
         // getting list of available wifi connection
-        wifi.loadWifiList((wifiStringList) => { 
-            var wifiArray = JSON.parse(wifiStringList);
+        await wifi.loadWifiList(async (wifiStringList) => {
+            var wifiArray = await JSON.parse(wifiStringList);
             setAvailableConnection(wifiArray)
         },
             (error) => {
@@ -47,17 +47,17 @@ const WifiScreen = () => {
         );
     }
 
-    const getConnectedDevices = () => {
+    const getConnectedDevices = async () => {
         // getting list of connected devices to phone hotspot
-        RNFetchBlob.fs.readStream("/proc/net/arp", 'utf8')
-            .then((stream) => {
+        await RNFetchBlob.fs.readStream("/proc/net/arp", 'utf8')
+            .then(async (stream) => {
                 let data = ''
                 stream.open()
                 stream.onData((chunk) => {
                     data += chunk
                 })
                 stream.onEnd(() => {
-                    setConnectedDeviceInfo(data); 
+                    setConnectedDeviceInfo(data);
                 })
             }).catch(err => {
 
