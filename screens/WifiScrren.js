@@ -12,23 +12,36 @@ const WifiScreen = () => {
     const [connectedTo, setConnectedTo] = useState("");
     const [deviceMacAddress, setDeviceMacAddress] = useState("");
     const [latlong, setLatlong] = useState([]);
-
+    const [seconds, setSeconds] = useState(0);
 
     useEffect(() => {
+
+        const intervalId = setInterval(() => {
+            console.log("with hook")
+            getWifiList();
+            getLatLong();
+            getConnectedDevices();
+            getConnectionInfo();
+            getDeviceDetails();
+        }, 5000);
+    }, []);
+
+    useEffect(() => {
+        console.log("without hook")
         persmission();
         getConnectedDevices();
         getConnectionInfo();
         getDeviceDetails();
-
     }, []);
 
     const persmission = async () => {
+        console.log("TCL: persmission -> persmission",);
         try {
             // permission to access location to set wifi connection
             const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
                 .then(res => {
                     if (res === "granted") {
-                        console.log("Thank you for your permission! :)");
+                        console.log("Thank you for your permission!");
                         getWifiList();
                         getLatLong();
                     } else {
@@ -43,6 +56,7 @@ const WifiScreen = () => {
         // getting list of available wifi connection
         await wifi.loadWifiList(async (wifiStringList) => {
             var wifiArray = await JSON.parse(wifiStringList);
+            console.log("TCL: getWifiList -> wifiArray", wifiArray)
             setAvailableConnection(wifiArray)
         },
             (error) => {
@@ -85,11 +99,7 @@ const WifiScreen = () => {
         }).catch(err => {
             console.log("TCL: WifiScreen -> err", err)
 
-        })
-        // Devices.getIpAddress().then(res => {
-        //     console.log("TCL: getIpAddress -> res", res)
-
-        // });
+        });
     }
 
     const getLatLong = async () => {
