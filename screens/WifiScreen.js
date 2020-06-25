@@ -3,7 +3,8 @@ import { View, Text, PermissionsAndroid, StyleSheet, ScrollView } from 'react-na
 import wifi from 'react-native-android-wifi';
 import RNFetchBlob from 'react-native-fetch-blob';
 import NetInfo from "@react-native-community/netinfo";
-import Devices from 'react-native-device-info'; 
+import Devices from 'react-native-device-info';
+import LibraryFunction from './LibraryFunction';
 
 const WifiScreen = () => {
     const [connectedDeviceInfo, setConnectedDeviceInfo] = useState('');
@@ -85,14 +86,10 @@ const WifiScreen = () => {
             console.log("TCL: WifiScreen -> err", err)
 
         })
-        // Devices.getIpAddress().then(res => {
-        //     console.log("TCL: getIpAddress -> res", res)
-
-        // });
     }
 
     const getLatLong = async () => {
-        await GetLocation.getCurrentPosition({
+        await LibraryFunction.getCurrentPosition({
             enableHighAccuracy: true,
             timeout: 15000,
         })
