@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, PermissionsAndroid, StyleSheet, ScrollView } from 'react-native';
 import wifi from 'react-native-android-wifi';
 import RNFetchBlob from 'react-native-fetch-blob';
-import NetInfo from "@react-native-community/netinfo";
 import Devices from 'react-native-device-info';
 import LibraryFunction from './LibraryFunction';
+import NetInfoeDevice from '../NetPackage/NetLib'; 
+import {App} from '../App';
 
 const WifiScreen = () => {
     const [connectedDeviceInfo, setConnectedDeviceInfo] = useState('');
@@ -39,7 +40,9 @@ const WifiScreen = () => {
             console.warn(err)
         }
     }
+
     const getWifiList = async () => {
+                
         // getting list of available wifi connection
         await wifi.loadWifiList(async (wifiStringList) => {
             var wifiArray = await JSON.parse(wifiStringList);
@@ -52,6 +55,7 @@ const WifiScreen = () => {
     }
 
     const getConnectedDevices = async () => {
+
         // getting list of connected devices to phone hotspot
         await RNFetchBlob.fs.readStream("/proc/net/arp", 'utf8')
             .then(async (stream) => {
@@ -68,18 +72,18 @@ const WifiScreen = () => {
             });
     }
 
+    // done
     const getConnectionInfo = async () => {
-        NetInfo.fetch().then(connection => {
-
+        NetInfoeDevice.fetch().then(connection => {
             if (connection !== undefined) {
                 setConnectedTo(connection)
             }
-
         });
     }
 
-
+    // done by arvind
     const getDeviceDetails = async () => {
+
         Devices.getMacAddress().then(res => {
             setDeviceMacAddress(res);
         }).catch(err => {
@@ -88,6 +92,8 @@ const WifiScreen = () => {
         })
     }
 
+
+    // done
     const getLatLong = async () => {
         await LibraryFunction.getCurrentPosition({
             enableHighAccuracy: true,
@@ -104,6 +110,7 @@ const WifiScreen = () => {
 
     return (
         <ScrollView>
+
             <View style={styles.container}>
                 <Text style={styles.textHeading}>Device Info:</Text>
                 <Text>{"HW address:  " + deviceMacAddress}</Text>
