@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import WifiScreen from './screens/WifiScrren';
+import WifiScreen from './screens/WifiScreen';
 
 const App = () => {
 
