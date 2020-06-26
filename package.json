@@ -36,5 +36,21 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "description": "use of wifi in corona detection",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shilpashendre/WIFIDemo.git"
+  },
+  "keywords": [
+    "trial",
+    "wifi"
+  ],
+  "author": "shilpa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shilpashendre/WIFIDemo/issues"
+  },
+  "homepage": "https://github.com/shilpashendre/WIFIDemo#readme"
 }

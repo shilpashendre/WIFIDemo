@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, PermissionsAndroid, StyleSheet, ScrollView } from 'react-native';
 import wifi from 'react-native-android-wifi';
 import RNFetchBlob from 'react-native-fetch-blob';
-import Devices from 'react-native-device-info';
 import LibraryFunction from './LibraryFunction';
-import NetInfoeDevice from '../NetPackage/NetLib'; 
-import {App} from '../App';
+import NetInfoeDevice from '../NetPackage/NetLib';
+import DeviceFunction from '../screens/DeviceInfoLibrary/DeviceFunction'; 
 
 const WifiScreen = () => {
     const [connectedDeviceInfo, setConnectedDeviceInfo] = useState('');
@@ -42,7 +41,7 @@ const WifiScreen = () => {
     }
 
     const getWifiList = async () => {
-                
+
         // getting list of available wifi connection
         await wifi.loadWifiList(async (wifiStringList) => {
             var wifiArray = await JSON.parse(wifiStringList);
@@ -83,8 +82,7 @@ const WifiScreen = () => {
 
     // done by arvind
     const getDeviceDetails = async () => {
-
-        Devices.getMacAddress().then(res => {
+        DeviceFunction.getMacAddress().then(res => {
             setDeviceMacAddress(res);
         }).catch(err => {
             console.log("TCL: WifiScreen -> err", err)
