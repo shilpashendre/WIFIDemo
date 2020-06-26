@@ -1,2 +1,2 @@
 # WIFIDemo
-use of wifi in corona detection
+To get wifi details.
